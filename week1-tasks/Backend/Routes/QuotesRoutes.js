@@ -13,12 +13,26 @@ router.post('/add', async(req, res) => {
   }
 });
 
-router.get('/random', async(req, res) => {
+const getQuoteOfTheDayIndex = (totalQuotes) => {
+  const today = new Date();
+  const startOfYear = new Date(today.getFullYear(), 0, 0);
+  const diff = today - startOfYear;
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.floor(diff / oneDay);
+  return dayOfYear % totalQuotes;
+};
+
+router.get('/qod', async(req, res) => {
   try {
-    const count = await Quote.countDocuments();
-    const random = Math.floor(Math.random() * count);
-    const randomQuote = await Quote.findOne().skip(random);
-    res.status(200).json({success: true, quote: randomQuote});
+    const quotes = await Quote.find();
+    if (quotes.length === 0) {
+      return res.status(404).json({ success: false, message: 'No quotes found.' });
+    }
+
+    const index = getQuoteOfTheDayIndex(quotes.length);
+    const quoteOfTheDay = quotes[index];
+
+    res.status(200).json({success: true, quote: quoteOfTheDay});
   } catch(e) {
     res.status(500).json({success: false});
   }
