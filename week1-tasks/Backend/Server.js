@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const quotesRoutes = require('./Routes/QuotesRoutes');
+const authRoutes = require('./Routes/AuthRoutes');
 
 mongoose.connect(process.env.MONGO)
 .then(() => console.log('MongoDB connected...'))
@@ -16,6 +17,7 @@ mongoose.connect(process.env.MONGO)
 const PORT = process.env.PORT || 5000;
 
 app.use('/quotes', quotesRoutes);
+app.use('/auth',authRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);    

@@ -6,6 +6,7 @@ export function Toggle() {
     const header = document.querySelector('.header');
     const quoteCards = document.querySelectorAll('.quote_card');
     const q_txt = document.querySelectorAll('.q_txt');
+    const userImg = document.getElementsByClassName('user_icon');
 
     if (savedTheme === 'dark') {
         d[0].innerText = '🌙';
@@ -37,6 +38,10 @@ export function Toggle() {
             });
         });
 
+        if (userImg.length > 0) {
+            userImg[0].src = '/userInverted.png';
+        }
+
     } else {
         d[0].innerText = '☀️';
         classes.forEach((obj) => {
@@ -66,5 +71,9 @@ export function Toggle() {
                 quoteCard.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.2)";
             });
         });
+
+        if (userImg.length > 0) {
+            userImg[0].src = '/user.png';
+        }
     }
 }
