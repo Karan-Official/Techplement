@@ -8,12 +8,16 @@ import userIcon from '/user.png';
 const Header = () => {
     const [darkMode, setDarkMode] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [email, setEmail] = useState('');
+    const [showEmail, setShowEmail] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         Toggle();
         const theme = localStorage.getItem('theme');
         const token = localStorage.getItem('token');
+        const userEmail = localStorage.getItem('email');
+
         if(theme === 'dark') {
             setDarkMode(true);
             document.body.classList.remove('simple_hover');
@@ -24,6 +28,7 @@ const Header = () => {
 
         if (token) {
             setIsLoggedIn(true);
+            setEmail(userEmail);
         }
     });
 
@@ -50,8 +55,13 @@ const Header = () => {
 
     const Logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('email');
         setIsLoggedIn(false);
         navigate('/');
+    };
+
+    const toggleEmailDisplay = () => {
+        setShowEmail(!showEmail);
     };
 
     return (
@@ -67,7 +77,10 @@ const Header = () => {
                 </div>
                 {isLoggedIn ? (
                     <div className="user_controls">
-                        <img className="user_icon" src={userIcon} alt="User" />
+                        <img className="user_icon" src={userIcon} alt="User" title={email} onClick={toggleEmailDisplay}/>
+                        {showEmail && (
+                            <span className="user_email">{email}</span>
+                        )}
                         <div className="logout_btn" onClick={Logout}>Logout</div>
                     </div>
                 ) : (
