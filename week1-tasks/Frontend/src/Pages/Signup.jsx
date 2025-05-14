@@ -12,7 +12,7 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/auth/signup', {
+      const response = await axios.post('https://techplement-backend-jo0r.onrender.com/auth/signup', {
         username,
         email,
         password,

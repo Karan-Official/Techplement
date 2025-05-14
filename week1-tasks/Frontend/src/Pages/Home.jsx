@@ -16,7 +16,7 @@ const Home = () => {
     useEffect(() => {
         const fetchDailyQuote = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/quotes/qod');
+                const response = await axios.get('https://techplement-backend-jo0r.onrender.com/quotes/qod');
                 setQuote(response.data.quote);
             } catch (e) {
                 console.error("Error fetching the daily quote:", e);
@@ -33,7 +33,7 @@ const Home = () => {
         }
 
         try {
-            const response = await axios.get(`http://localhost:5000/quotes/author/${author}`);
+            const response = await axios.get(`https://techplement-backend-jo0r.onrender.com/quotes/author/${author}`);
             setQuotesByAuthor(response.data.quote);
         } catch (e) {
             if (e.response && e.response.status === 404) {
